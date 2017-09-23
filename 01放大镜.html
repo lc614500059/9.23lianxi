@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #smallbox {
+            width: 448px;
+            height: 288px;
+            position: relative;
+            margin-left: 50px;
+
+        }
+
+        #float {
+            width: 100px;
+            height: 100px;
+            background: url(bj.png) repeat;
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        #bigbox {
+            width: 480px;
+            height: 288px;
+            position: absolute;
+            left: 600px;
+            top: 0;
+            overflow: hidden;
+            display: none;
+        }
+
+        #bigbox img {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="smallbox">
+    <img src="small.png" alt="" id="small"/>
+
+    <div id="float"></div>
+
+    <div id="bigbox">
+        <img src="big.jpg" alt="" id="big"/>
+    </div>
+
+</div>
+
+</body>
+<script>
+    var oSmallbox = document.getElementById("smallbox");
+    var oFloat = document.getElementById("float");
+    var oBigbox = document.getElementById("bigbox");
+    var oBig = document.getElementById("big");
+    //   隐藏
+    oSmallbox.onmouseout = function () {
+        oFloat.style.display = "none";
+        oBigbox.style.display = "none";
+    }
+    //    显示
+    oSmallbox.onmousemove = function (e) {
+        e = e || event;
+        oFloat.style.display = "block";
+        oBigbox.style.display = "block";
+
+        var l = e.clientX - oSmallbox.offsetLeft - oFloat.offsetWidth / 2;
+        var t = e.clientY - oSmallbox.offsetTop - oFloat.offsetHeight / 2;
+        oFloat.style.left = l + "px";
+        oFloat.style.top = t + "px";
+//        控制范围
+        if (l < 0) {
+            oFloat.style.left = 0 + "px"
+        }
+        if (l > oSmallbox.offsetWidth - oFloat.offsetWidth) {
+            oFloat.style.left = oSmallbox.offsetWidth - oFloat.offsetWidth + "px"
+        }
+        if (t < 0) {
+            oFloat.style.top = 0 + "px"
+        }
+        if (t > oSmallbox.offsetHeight - oFloat.offsetHeight) {
+            oFloat.style.top = oSmallbox.offsetHeight - oFloat.offsetHeight + "px"
+        }
+
+        var lbili = l / (oSmallbox.offsetWidth - oFloat.offsetWidth);
+        var tbili = t / (oSmallbox.offsetHeight - oFloat.offsetHeight);
+        var lbig = lbili * (oBig.offsetWidth - oBigbox.offsetWidth);
+        var tbig = tbili * (oBig.offsetHeight - oBigbox.offsetHeight);
+
+        oBig.style.left = -lbig + "px";
+        oBig.style.top = -tbig + "px";
+
+    }
+
+</script>
+</html>
